@@ -49,7 +49,7 @@ async function addOrUpdate() {
               <input type="text" id="name" class="form-control" v-model="link.name" required />
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
+              <label for="description" class="form-label">Link</label>
               <textarea
                 id="description"
                 class="form-control"

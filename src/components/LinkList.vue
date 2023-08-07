@@ -29,7 +29,7 @@ async function deleteLink(id) {
 
 <template>
   <div>
-    <h1 class="text-center text-primary my-4">Sportler Redirects</h1>
+    <h1 class="text-center text-primary mb-4">Sportler Redirects</h1>
     <div v-if="show" class="modal-overlay">
       <div class="modal-wrapper">
         <add-or-update @close="toggleComponent" :data="data" :isNew="isNew"></add-or-update>
