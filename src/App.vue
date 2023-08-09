@@ -19,7 +19,7 @@ onMounted(detectBrowserLanguage)
 <style>
 .app-container {
   padding: 30px;
-  background-image: url('dolomites.webp');
+  background-image: url('/dolomites.webp');
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
