@@ -20,17 +20,18 @@ onMounted(() => {
 })
 
 const link = ref({
-  name: '',
-  description: ''
+  slug: '',
+  url_de: '',
+  url_it: ''
 })
 
 async function addOrUpdate() {
   if (props.isNew) {
-    await addDoc(collection(db, 'links'), link.value).then((res) => {
+    await addDoc(collection(db, 'redirections'), link.value).then((res) => {
       emits('close')
     })
   } else {
-    await updateDoc(doc(db, 'links', props.data.id), link.value).then((res) => {
+    await updateDoc(doc(db, 'redirections', props.data.id), link.value).then((res) => {
       emits('close')
     })
   }
@@ -43,19 +44,18 @@ async function addOrUpdate() {
       <div class="modal-wrapper">
         <div class="modal-container">
           <form @submit.prevent="addOrUpdate" class="p-4">
-            <h2 class="mb-4">{{ isNew ? 'Add New Task' : 'Edit Task' }}</h2>
+            <h2 class="mb-4">{{ isNew ? 'Add New Redirection' : 'Edit Redirection' }}</h2>
             <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" id="name" class="form-control" v-model="link.name" required />
+              <label for="slug" class="form-label">Slug</label>
+              <input type="text" id="slug" class="form-control" v-model="link.slug" required />
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label">Description</label>
-              <textarea
-                id="description"
-                class="form-control"
-                v-model="link.link"
-                required
-              ></textarea>
+              <label for="url_de" class="form-label">URL (German)</label>
+              <input type="text" id="url_de" class="form-control" v-model="link.url_de" required />
+            </div>
+            <div class="mb-3">
+              <label for="url_it" class="form-label">URL (Italian)</label>
+              <input type="text" id="url_it" class="form-control" v-model="link.url_it" required />
             </div>
             <div class="d-flex justify-content-end">
               <button @click="emits('close')" type="button" class="btn btn-secondary me-2">
