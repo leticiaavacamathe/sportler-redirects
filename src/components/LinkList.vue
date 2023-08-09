@@ -29,7 +29,7 @@ async function deleteRedirection(id) {
 
 <template>
   <div>
-    <h1 class="text-center text-primary mb-4">Sportler Redirects List</h1>
+    <h1 class="text-center text-primary text-white mb-4">Sportler Redirects List</h1>
     <div v-if="show" class="modal-overlay">
       <div class="modal-wrapper">
         <add-or-update @close="toggleComponent" :data="data" :isNew="isNew"></add-or-update>
@@ -37,7 +37,11 @@ async function deleteRedirection(id) {
     </div>
 
     <button class="btn btn-primary mb-3" @click="toggleComponent()">Add New</button>
-    <div v-for="redirection in redirections" :key="redirection.id" class="card my-2 shadow-sm">
+    <div
+      v-for="redirection in redirections"
+      :key="redirection.id"
+      class="card my-2 transparent-card"
+    >
       <div class="card-body">
         <h5 class="card-title">{{ redirection.slug }}</h5>
         <p class="card-text">{{ redirection.url_de }}</p>
@@ -54,3 +58,9 @@ async function deleteRedirection(id) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.transparent-card {
+  background-color: rgba(240, 240, 240, 0.8);
+}
+</style>

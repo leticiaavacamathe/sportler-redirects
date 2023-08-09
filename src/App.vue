@@ -12,7 +12,16 @@ onMounted(detectBrowserLanguage)
 </script>
 
 <template>
-  <main>
+  <main class="app-container">
     <LinkList />
   </main>
 </template>
+<style>
+.app-container {
+  padding: 30px;
+  background-image: url('dolomites.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+</style>
