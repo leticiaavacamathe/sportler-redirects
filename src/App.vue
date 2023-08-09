@@ -1,5 +1,5 @@
 <script setup>
-import LinkList from './components/LinkList.vue'
+import RedirectList from './components/RedirectList.vue'
 import { ref, onMounted } from 'vue'
 
 const browserLanguage = ref('')
@@ -13,7 +13,7 @@ onMounted(detectBrowserLanguage)
 
 <template>
   <main class="app-container">
-    <LinkList />
+    <RedirectList />
   </main>
 </template>
 <style>
