@@ -10,7 +10,7 @@ const props = defineProps({
 })
 
 defineComponent({
-  name: 'AddOrUpdate'
+  name: 'AddOrUpdateForm'
 })
 
 const emits = defineEmits(['close'])
