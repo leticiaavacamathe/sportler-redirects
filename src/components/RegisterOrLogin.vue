@@ -85,27 +85,33 @@ onAuthStateChanged(auth, (currentUser) => {
 <template>
   <div>
     <div v-if="user">{{ user?.email }} <button @click="signout">Signout</button></div>
-    <form @submit.prevent="submit">
-      <div>
-        <input type="email" placeholder="Enter email" v-model="data.email" />
+    <form @submit.prevent="submit" class="my-4">
+      <div class="mb-3">
+        <input type="email" class="form-control" placeholder="Enter email" v-model="data.email" />
       </div>
-      <div>
-        <input type="password" placeholder="Enter password" v-model="data.password" />
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter password"
+          v-model="data.password"
+        />
       </div>
-      <button type="submit">{{ mode === 'login' ? 'Login' : 'Register' }}</button>
-      <div @click="toggleMode(mode === 'login' ? 'register' : 'login')">
+      <button type="submit" class="btn btn-primary">
+        {{ mode === 'login' ? 'Login' : 'Register' }}
+      </button>
+      <div @click="toggleMode(mode === 'login' ? 'register' : 'login')" class="mt-2 cursor-pointer">
         {{ mode === 'login' ? 'Not a user? Register' : 'Already a user? Login' }}
       </div>
     </form>
-    <div v-if="successMessage" class="success-message">
+    <div v-if="successMessage" class="alert alert-success mt-4">
       {{ successMessage }}
     </div>
-    <div v-if="errorMessage" class="error-message">
+    <div v-if="errorMessage" class="alert alert-danger mt-4">
       {{ errorMessage }}
     </div>
   </div>
 </template>
-
 <style scoped>
 .success-message {
   background-color: #4caf50;
