@@ -34,5 +34,3 @@ Leticia [@GitHub](https://github.com/leticiaavacamathe)
 ## Demo
 
 You can try a live demo of this project on [Netlify](https://sportler-redirects.netlify.app/).
-
-Enjoy exploring and easily managing your redirection links!
