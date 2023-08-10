@@ -1,5 +1,4 @@
 <script setup>
-import RedirectList from './components/RedirectList.vue'
 import { ref, onMounted } from 'vue'
 
 const browserLanguage = ref('')
@@ -12,10 +11,17 @@ onMounted(detectBrowserLanguage)
 </script>
 
 <template>
-  <main class="app-container">
-    <RedirectList />
-  </main>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+
 <style>
 .app-container {
   padding: 30px;

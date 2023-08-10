@@ -1,4 +1,3 @@
-<!-- eslint-disable no-unused-vars -->
 <script setup>
 import { db } from '../firebase.js'
 import { collection, addDoc, doc, updateDoc } from 'firebase/firestore'
@@ -25,15 +24,23 @@ const link = ref({
   url_it: ''
 })
 
+const successMessage = ref('')
+const errorMessage = ref('')
+
 async function addOrUpdate() {
-  if (props.isNew) {
-    await addDoc(collection(db, 'redirections'), link.value).then((res) => {
+  try {
+    if (props.isNew) {
+      await addDoc(collection(db, 'redirections'), link.value)
+      successMessage.value = 'Redirection link added successfully'
       emits('close')
-    })
-  } else {
-    await updateDoc(doc(db, 'redirections', props.data.id), link.value).then((res) => {
+    } else {
+      await updateDoc(doc(db, 'redirections', props.data.id), link.value)
+      successMessage.value = 'Redirection link updated successfully'
       emits('close')
-    })
+    }
+  } catch (error) {
+    errorMessage.value = 'Error while saving redirection link'
+    console.error('Error adding/updating redirection:', error)
   }
 }
 </script>
