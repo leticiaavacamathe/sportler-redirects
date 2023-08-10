@@ -1,7 +1,7 @@
 <script setup>
 import { db } from '../firebase.js'
 import { collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { auth } from '@/firebase'
 import { signOut } from 'firebase/auth'
 import router from '../router/router.js'
@@ -13,6 +13,7 @@ const data = ref({})
 const isNew = ref(true)
 const successMessage = ref('')
 const errorMessage = ref('')
+const searchSlug = ref('')
 
 onMounted(async () => {
   const redirectionsCollection = collection(db, 'redirections')
@@ -52,6 +53,14 @@ const signout = async () => {
     console.error('Error signing out:', error)
   }
 }
+
+const filteredRedirections = computed(() => {
+  if (!searchSlug.value) {
+    return redirections.value
+  } else {
+    return redirections.value.filter((link) => link.slug.includes(searchSlug.value))
+  }
+})
 </script>
 
 <template>
@@ -63,9 +72,9 @@ const signout = async () => {
         <add-or-update @close="toggleComponent" :data="data" :isNew="isNew"></add-or-update>
       </div>
     </div>
-
+    <input v-model="searchSlug" placeholder="Search by Slug" class="form-control mb-3" />
     <button class="btn btn-primary mb-3" @click="toggleComponent()">Add New</button>
-    <div v-for="link in redirections" :key="link.id" class="card my-2 transparent-card">
+    <div v-for="link in filteredRedirections" :key="link.id" class="card my-2 transparent-card">
       <div class="card-body">
         <h5 class="card-title">{{ link.slug }}</h5>
         <p class="card-text">{{ link.url_de }}</p>
