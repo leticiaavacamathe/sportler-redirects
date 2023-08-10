@@ -7,6 +7,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth'
 import { ref } from 'vue'
+import router from '../router/router.js'
 
 const data = ref({
   email: '',
@@ -38,6 +39,7 @@ async function login(email, password) {
     successMessage.value = 'Login successful'
     errorMessage.value = ''
     clearMessages()
+    router.push('/links')
   } catch (error) {
     errorMessage.value = 'Error logging in. Please check your credentials.'
     clearMessages()
@@ -83,36 +85,68 @@ onAuthStateChanged(auth, (currentUser) => {
 })
 </script>
 <template>
-  <div>
-    <div v-if="user">{{ user?.email }} <button @click="signout">Signout</button></div>
-    <form @submit.prevent="submit" class="my-4">
-      <div class="mb-3">
-        <input type="email" class="form-control" placeholder="Enter email" v-model="data.email" />
-      </div>
-      <div class="mb-3">
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Enter password"
-          v-model="data.password"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">
-        {{ mode === 'login' ? 'Login' : 'Register' }}
-      </button>
-      <div @click="toggleMode(mode === 'login' ? 'register' : 'login')" class="mt-2 cursor-pointer">
-        {{ mode === 'login' ? 'Not a user? Register' : 'Already a user? Login' }}
-      </div>
-    </form>
-    <div v-if="successMessage" class="alert alert-success mt-4">
-      {{ successMessage }}
+  <div class="login-container">
+    <div class="card my-4 transparent-card p-4">
+      <div v-if="user">{{ user?.email }} <button @click="signout">Signout</button></div>
+      <form @submit.prevent="submit">
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Enter email" v-model="data.email" />
+        </div>
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            v-model="data.password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          {{ mode === 'login' ? 'Login' : 'Register' }}
+        </button>
+        <div
+          @click="toggleMode(mode === 'login' ? 'register' : 'login')"
+          class="mt-3 cursor-pointer text-center"
+        >
+          {{ mode === 'login' ? 'Not a user? Register' : 'Already a user? Login' }}
+        </div>
+      </form>
     </div>
-    <div v-if="errorMessage" class="alert alert-danger mt-4">
-      {{ errorMessage }}
+    <div class="feedback-message">
+      <div v-if="successMessage" class="alert alert-success mt-4">
+        {{ successMessage }}
+      </div>
+      <div v-if="errorMessage" class="alert alert-danger mt-4">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>
+
 <style scoped>
+.login-container {
+  padding: 50px;
+  background-image: url('/dolomites.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.feedback-message {
+  position: absolute;
+  bottom: 100px;
+}
+
+.transparent-card {
+  background-color: rgba(240, 240, 240, 0.8);
+  border: none;
+  border-radius: 10px;
+}
+
 .success-message {
   background-color: #4caf50;
   color: white;
