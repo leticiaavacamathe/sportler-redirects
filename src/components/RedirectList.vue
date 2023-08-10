@@ -2,7 +2,6 @@
 import { db } from '../firebase.js'
 import { collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore'
 import { ref, onMounted } from 'vue'
-import AddOrUpdate from './AddOrUpdate.vue'
 
 const redirections = ref([])
 const show = ref(false)
