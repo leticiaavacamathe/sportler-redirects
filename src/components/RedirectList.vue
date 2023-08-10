@@ -2,6 +2,9 @@
 import { db } from '../firebase.js'
 import { collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore'
 import { ref, onMounted } from 'vue'
+import { auth } from '@/firebase'
+import { signOut } from 'firebase/auth'
+import router from '../router/router.js'
 import AddOrUpdate from './AddOrUpdate.vue'
 
 const redirections = ref([])
@@ -40,10 +43,20 @@ async function deleteRedirection(id) {
     errorMessage.value = 'Error deleting redirection link'
   }
 }
+
+const signout = async () => {
+  try {
+    await signOut(auth)
+    router.push('/')
+  } catch (error) {
+    console.error('Error signing out:', error)
+  }
+}
 </script>
 
 <template>
   <div class="list-container">
+    <button @click="signout" class="btn btn-danger logout-button">Logout</button>
     <h1 class="text-center text-primary text-white mb-4">Sportler Redirects List</h1>
     <div v-if="show" class="modal-overlay">
       <div class="modal-wrapper">
@@ -75,6 +88,12 @@ async function deleteRedirection(id) {
 </template>
 
 <style scoped>
+.logout-button {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  cursor: pointer;
+}
 .list-container {
   padding: 50px;
   background-image: url('/dolomites.webp');

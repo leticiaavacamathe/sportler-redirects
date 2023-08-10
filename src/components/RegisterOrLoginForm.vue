@@ -72,7 +72,6 @@ async function signout() {
   try {
     await signOut(auth)
     successMessage.value = 'Logout successful'
-    errorMessage.value = ''
     clearMessages()
   } catch (error) {
     errorMessage.value = 'Error logging out. Please try again.'
@@ -87,7 +86,10 @@ onAuthStateChanged(auth, (currentUser) => {
 <template>
   <div class="login-container">
     <div class="card my-4 transparent-card p-4">
-      <div v-if="user">{{ user?.email }} <button @click="signout">Signout</button></div>
+      <div v-if="user" class="user-info">
+        {{ user?.email }}
+        <button @click="signout" class="logout-button">Signout</button>
+      </div>
       <form @submit.prevent="submit">
         <div class="mb-3">
           <input type="email" class="form-control" placeholder="Enter email" v-model="data.email" />
@@ -123,6 +125,23 @@ onAuthStateChanged(auth, (currentUser) => {
 </template>
 
 <style scoped>
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .login-container {
   padding: 50px;
   background-image: url('/dolomites.webp');
