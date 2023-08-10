@@ -17,28 +17,43 @@ const mode = ref('login')
 
 const user = ref(null)
 
+const successMessage = ref('')
+
+const errorMessage = ref('')
+
+function clearMessages() {
+  setTimeout(() => {
+    successMessage.value = ''
+    errorMessage.value = ''
+  }, 5000)
+}
+
 function toggleMode(val) {
   mode.value = val
 }
 
 async function login(email, password) {
-  await signInWithEmailAndPassword(auth, email, password)
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  try {
+    await signInWithEmailAndPassword(auth, email, password)
+    successMessage.value = 'Login successful'
+    errorMessage.value = ''
+    clearMessages()
+  } catch (error) {
+    errorMessage.value = 'Error logging in. Please check your credentials.'
+    clearMessages()
+  }
 }
 
 async function register(email, password) {
-  await createUserWithEmailAndPassword(auth, email, password)
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  try {
+    await createUserWithEmailAndPassword(auth, email, password)
+    successMessage.value = 'Registration successful'
+    errorMessage.value = ''
+    clearMessages()
+  } catch (error) {
+    errorMessage.value = 'Error registering. Please try again.'
+    clearMessages()
+  }
 }
 
 function submit() {
@@ -52,11 +67,15 @@ function submit() {
 }
 
 async function signout() {
-  await signOut(auth)
-    .then((res) => {})
-    .catch((err) => {
-      console.log(err)
-    })
+  try {
+    await signOut(auth)
+    successMessage.value = 'Logout successful'
+    errorMessage.value = ''
+    clearMessages()
+  } catch (error) {
+    errorMessage.value = 'Error logging out. Please try again.'
+    clearMessages()
+  }
 }
 
 onAuthStateChanged(auth, (currentUser) => {
@@ -78,5 +97,39 @@ onAuthStateChanged(auth, (currentUser) => {
         {{ mode === 'login' ? 'Not a user? Register' : 'Already a user? Login' }}
       </div>
     </form>
+    <div v-if="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+    <div v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
+
+<style scoped>
+.success-message {
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.error-message {
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  z-index: 1000;
+}
+</style>
