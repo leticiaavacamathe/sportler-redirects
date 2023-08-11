@@ -66,7 +66,9 @@ const filteredRedirections = computed(() => {
 <template>
   <div class="list-container">
     <button @click="signout" class="btn btn-danger logout-button">Logout</button>
-    <h1 class="text-center text-primary text-white mb-4">Sportler Redirects List</h1>
+    <h1 class="text-center text-primary text-black mb-4 list-container__title">
+      Sportler Redirects List
+    </h1>
     <div v-if="show" class="modal-overlay">
       <div class="modal-wrapper">
         <add-or-update @close="toggleComponent" :data="data" :isNew="isNew"></add-or-update>
@@ -109,6 +111,19 @@ const filteredRedirections = computed(() => {
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
+}
+
+.list-container__title {
+  padding-top: 30px;
+  font-size: 45px;
+
+  letter-spacing: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .list-container__title {
+    font-size: 30px;
+  }
 }
 
 .transparent-card {
